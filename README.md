@@ -1,2 +1,321 @@
-# Nishant-Sharma
-Welcome to our study group
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTech-AIML-Study-Material - GitHub</title>
+    <style>
+        :root {
+            --color-bg-canvas: #0d1117;
+            --color-bg-subtle: #161b22;
+            --color-border-default: #30363d;
+            --color-text-primary: #c9d1d9;
+            --color-text-secondary: #8b949e;
+            --color-accent-fg: #58a6ff;
+            --color-btn-bg: #21262d;
+            --color-btn-border: #30363d;
+            --color-btn-hover-bg: #30363d;
+            --color-success-fg: #3fb950;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--color-bg-canvas);
+            color: var(--color-text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* GitHub Header Mock */
+        header {
+            background-color: var(--color-bg-subtle);
+            border-bottom: 1px solid var(--color-border-default);
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .repo-title {
+            display: flex;
+            align-items: center;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .repo-title a {
+            color: var(--color-accent-fg);
+            text-decoration: none;
+        }
+
+        .repo-title span {
+            color: var(--color-text-secondary);
+            margin: 0 4px;
+        }
+
+        .badge {
+            font-size: 12px;
+            border: 1px solid var(--color-border-default);
+            border-radius: 2em;
+            padding: 0 7px;
+            color: var(--color-text-secondary);
+            margin-left: 8px;
+            font-weight: 500;
+        }
+
+        /* Repo Navigation Tabs */
+        .repo-nav {
+            display: flex;
+            border-bottom: 1px solid var(--color-border-default);
+            padding-left: 32px;
+            background-color: var(--color-bg-subtle);
+        }
+
+        .nav-item {
+            padding: 8px 16px;
+            color: var(--color-text-primary);
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-item.active {
+            border-bottom-color: #f78166;
+            font-weight: 600;
+        }
+
+        /* Main Layout */
+        .container {
+            max-width: 1400px;
+            margin: 24px auto;
+            padding: 0 24px;
+        }
+
+        /* Search & Action Bar */
+        .action-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            gap: 12px;
+        }
+
+        .search-input {
+            background-color: var(--color-bg-canvas);
+            border: 1px solid var(--color-border-default);
+            border-radius: 6px;
+            color: var(--color-text-primary);
+            padding: 5px 12px;
+            font-size: 14px;
+            width: 320px;
+        }
+
+        .search-input:focus {
+            outline: 2px solid var(--color-accent-fg);
+        }
+
+        .btn {
+            background-color: var(--color-btn-bg);
+            border: 1px solid var(--color-btn-border);
+            color: var(--color-accent-fg);
+            padding: 5px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn:hover {
+            background-color: var(--color-btn-hover-bg);
+        }
+
+        .btn-primary {
+            background-color: var(--color-success-fg);
+            color: #ffffff;
+            border: 1px solid rgba(240,246,252,0.1);
+        }
+        
+        .btn-primary:hover {
+            background-color: #2ea44f;
+        }
+
+        /* Subjects Grid Layout */
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            align-items: start;
+        }
+
+        @media (max-width: 1024px) {
+            .subjects-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .subjects-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Column / Subject Component */
+        .subject-column {
+            background-color: var(--color-bg-subtle);
+            border: 1px solid var(--color-border-default);
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .column-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--color-border-default);
+            font-weight: 600;
+            font-size: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .subject-count {
+            background-color: rgba(110, 118, 129, 0.4);
+            color: var(--color-text-primary);
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+
+        .column-body {
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        /* Topic Card inside Column */
+        .topic-card {
+            background-color: var(--color-bg-canvas);
+            border: 1px solid var(--color-border-default);
+            border-radius: 6px;
+            padding: 12px;
+        }
+
+        .topic-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            color: var(--color-text-primary);
+            cursor: pointer;
+        }
+
+        .topic-header:hover {
+            color: var(--color-accent-fg);
+        }
+
+        .topic-icon {
+            color: var(--color-text-secondary);
+        }
+
+        .topic-meta {
+            font-size: 12px;
+            color: var(--color-text-secondary);
+            margin-top: 4px;
+            padding-left: 24px;
+        }
+
+        /* Hidden details panel mimicking folder structures */
+        .resources-list {
+            margin-top: 8px;
+            padding-left: 24px;
+            list-style: none;
+            display: none;
+            border-left: 1px dashed var(--color-border-default);
+        }
+
+        .resources-list.open {
+            display: block;
+        }
+
+        .resource-item {
+            margin: 6px 0;
+            font-size: 13px;
+        }
+
+        .resource-item a {
+            color: var(--color-accent-fg);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .resource-item a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Mock -->
+    <header>
+        <div class="repo-title">
+            <svg height="20" viewBox="0 0 16 16" width="20" fill="currentColor" style="margin-right: 8px; color: var(--color-text-secondary);"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 0 1 1-1h8Z"></path></header>
+            <a href="#">University-Vault</a>
+            <span>/</span>
+            <a href="#" style="font-weight: 600;">BTech-AI-ML-Resources</a>
+            <span class="badge">Public</span>
+        </div>
+        <div>
+            <button class="btn">⭐ Star <span style="color:var(--color-text-secondary); margin-left:4px;">142</span></button>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="repo-nav">
+        <a href="#" class="nav-item active">📁 Code</a>
+        <a href="#" class="nav-item">Issues <span class="subject-count">3</span></a>
+        <a href="#" class="nav-item">Pull Requests <span class="subject-count">0</span></a>
+        <a href="#" class="nav-item">Actions</a>
+        <a href="#" class="nav-item">Projects</a>
+    </div>
+
+    <div class="container">
+        <!-- Filter Actions -->
+        <div class="action-bar">
+            <input type="text" class="search-input" id="searchBar" placeholder="Search subjects or topics..." onkeyup="filterSubjects()">
+            <div>
+                <button class="btn">Branch: <span>main</span></button>
+                <button class="btn btn-primary">⬇ Download All</button>
+            </div>
+        </div>
+
+        <!-- Multi-Column Subject Dashboard -->
+        <div class="subjects-grid">
+            
+            <!-- Column 1: Core Mathematics & Foundations -->
+            <div class="subject-column">
+                <div class="column-header">
+                    Mathematics & Foundational AI
+                    <span class="subject-count">3</span>
+                </div>
+                <div class="column-body">
+                    <div class="topic-card">
+                        <div class="topic-header" onclick="toggleResources(this)">
+                            <span class="topic-icon">📁</span> Linear Algebra & Matrices
+                        </div>
+                        <div class="topic-meta">Updated 2 days ago</div>
+                        <ul class="resources-list">
+                            <li class="resource-item"><a href="#">📄 Eigenvalues_Vectors_Notes.pdf</a></li>
+                            <li class="resource-item"><a href="#">📄 SVD_Decomposition_Sheet.pdf</a></li>
+                            <li class="resource-item"><a href="#">💻 Vector_Spaces_Lab.ipynb</a></li>
+                        </ul>
+
